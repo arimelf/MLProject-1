@@ -72,10 +72,13 @@ class DataTransformation:
             train_df = pd.read_csv(train_path)
             test_df = pd.read_csv(test_path)
 
+            print(f"printing head of train_df {train_df.head()}")
+
             logging.info("Read train and test data completed")
             logging.info("Obtaining preprocessing object")
 
             preprocessing_obj = self.get_data_transformer_objects()
+            
 
             target_column_name = "math_score"
             numerical_columns = ["writing_score","reading_score"]
@@ -94,8 +97,13 @@ class DataTransformation:
             input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
 
+            print(f"printing nparray {np.array(input_feature_train_df)}")
+
+
             train_arr = np.c_[input_feature_train_arr,np.array(input_feature_train_df)]
             test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
+
+            print(f"train_arr is {train_arr[0,:]}")
 
             logging.info(f"Saved preprocessing object")
 
